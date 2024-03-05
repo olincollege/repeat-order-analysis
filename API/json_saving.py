@@ -11,7 +11,7 @@ def save_to_json(str1, str2, date_time):
     :param date_time: Datetime object to save.
     :param file_name: Name of the JSON file to save the data to.
     """
-    file_name = "/home/akurtz/repeat-order-analysis/API/keys.json"
+    file_name = "API/keys.json"
     # Convert datetime to a string in ISO format for JSON compatibility
     date_time_str = date_time.isoformat()
 
@@ -35,7 +35,7 @@ def read_from_json():
     :param file_name: Name of the JSON file to read the data from.
     :return: Tuple containing two strings and a datetime object.
     """
-    file_name = "/home/akurtz/repeat-order-analysis/API/keys.json"
+    file_name = "API/keys.json"
     with open(file_name, "r") as file:
         data = json.load(file)
 

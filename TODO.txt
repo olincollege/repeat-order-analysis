@@ -1,0 +1,21 @@
+Obtain all client data from API 
+- Set up present on both machines DONE
+- Figure out API calls ANDREW
+- Obtain all data (loop) 
+- Convert from json CARLO
+
+Visualise it CARLO
+- Understand whaft plots we want to make
+    1. Number of orders per customers
+    2. Time between orders
+    3. Repeat orders vs single orders
+    4. Geolocation
+    5. Order size / reorder size
+    6. Customer Demographics (if possible)
+    7. What products sell best - where
+- Find relevant libraries & install
+
+Write essay
+- Outline
+- Story
+- Plots to include

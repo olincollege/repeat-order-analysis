@@ -9,6 +9,4 @@ api = etsy_api.EtsyAPI(
 api_data = api.get_shop_receipts(
     23574688, was_canceled=False, was_shipped=False, limit=100
 )
-save_output_to_json(
-    "/home/akurtz/repeat-order-analysis/API/output.json", api_data
-)
+save_output_to_json("API/output.json", api_data)
