@@ -1,6 +1,6 @@
 # Secret information
-API/keys.json
-API/orders.json
+keys.json
+orders.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
