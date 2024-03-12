@@ -5,7 +5,7 @@ Library to hand accessing Etsy API to pull order data and store keys
 import json
 import requests
 
-KEY_PATH = "/home/akurtz/repeat-order-analysis/API/keys.json"
+KEY_PATH = "keys.json"
 
 
 def save_to_json(file_path, data):
