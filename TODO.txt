@@ -7,13 +7,13 @@ Obtain all client data from API
 Visualise it CARLO
 - Understand whaft plots we want to make
     1. Number of orders per customers DONE
-    2. Time between orders
+    2. Time between orders DONE 
     3. Repeat orders vs single orders DONE
     4. Geolocation DONE
-    5. Order size / reorder size 
+    5. Order size / reorder size DONE 
     6. Customer Demographics (if possible)
     7. What products sell best - where
-    8. When orders are places (near holidays?)
+    8. When orders are placed (near holidays?)
 - Find relevant libraries & install
 
 Write essay
