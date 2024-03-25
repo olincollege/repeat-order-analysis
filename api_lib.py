@@ -123,6 +123,41 @@ def get_orders(key_path, shop_id, limit=100, offset=0):
     return orders.json()
 
 
+def get_reviews(key_path, shop_id, limit=100, offset=0):
+    """
+    Gets up to 100 reviews from shop using Etsy API
+
+    If the key at key_path has expired, it gets a new key.
+
+    Args:
+        key_path: String with path to json containing key
+        shop_id: String with shop id to get orders from
+        limit: Int of range 0-100 representing how many orders to get
+        offset: First how many orders to skip chronologically
+
+    Returns a dict of reviews with all data provided by API
+    """
+    key = read_json(key_path)
+
+    headers = {
+        "Authorization": f"Bearer {key['access_token']}",
+        "x-api-key": key["keystring"],
+    }
+
+    reviews_url = (
+        f"https://openapi.etsy.com/v3/application/shops/{shop_id}"
+        + f"/reviews?limit={limit}&offset={offset}"
+    )
+    reviews = requests.get(reviews_url, headers=headers, timeout=100)
+    if reviews.status_code != 200:
+        refresh_key(key_path)
+        key = read_json(key_path)
+        headers["Authorization"] = f"Bearer {key['access_token']}"
+        reviews = requests.get(reviews_url, headers=headers, timeout=100)
+
+    return reviews.json()
+
+
 def get_all_orders(key_path, data_path, shop_id):
     """
     Gets all order receipts from an Etsy shop and saves them to a JSON
@@ -143,3 +178,25 @@ def get_all_orders(key_path, data_path, shop_id):
         orders.extend(new_orders["results"])
 
     save_to_json(data_path, orders)
+
+
+def get_all_reviews(key_path, data_path, shop_id):
+    """
+    Gets all order reviews from an Etsy shop and saves them to a JSON
+
+    Args:
+        key_path: String with path to json containing api key
+        data_path: String with path to where to save order data
+        shop_id: Int representing Etsy shop id
+    """
+
+    first_review = get_reviews(key_path, shop_id, limit=1)
+    num_reviews = int(first_review["count"])
+
+    reviews = []
+
+    for index in range(0, num_reviews + 1, 100):
+        new_reviews = get_reviews(key_path, shop_id, offset=index)
+        reviews.extend(new_reviews["results"])
+
+    save_to_json(data_path, reviews)

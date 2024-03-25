@@ -2,10 +2,12 @@
 Analyze repeat customer order data from an Etsy shop
 """
 
-from api_lib import get_all_orders
+from api_lib import get_all_orders, get_all_reviews
 
 KEY_PATH = "keys.json"
-DATA_PATH = "orders.json"
+ORDERS_PATH = "orders.json"
+REVIEWS_PATH = "reviews.json"
 SHOP_ID = 23574688
 
-get_all_orders(KEY_PATH, DATA_PATH, SHOP_ID)
+get_all_orders(KEY_PATH, ORDERS_PATH, SHOP_ID)
+get_all_reviews(KEY_PATH, REVIEWS_PATH, SHOP_ID)

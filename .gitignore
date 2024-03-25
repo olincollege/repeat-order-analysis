@@ -1,6 +1,7 @@
 # Secret information
 keys.json
 orders.json
+reviews.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
