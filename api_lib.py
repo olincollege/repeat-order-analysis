@@ -5,8 +5,6 @@ Library to hand accessing Etsy API to pull order data and store keys
 import json
 import requests
 
-KEY_PATH = "keys.json"
-
 
 def save_to_json(file_path, data):
     """
@@ -28,7 +26,8 @@ def read_json(file_path):
     Args:
         file_path: String representing filepath to get data from
 
-    Returns dict with JSON data
+    Returns:
+        Dict with JSON data
     """
     with open(file_path, "r", encoding="utf-8") as file:
         data_dict = json.load(file)
@@ -100,7 +99,8 @@ def get_orders(key_path, shop_id, limit=100, offset=0):
         limit: Int of range 0-100 representing how many orders to get
         offset: First how many orders to skip chronologically
 
-    Returns a dict of orders with all data provided by API
+    Returns:
+        Dict of orders with all data provided by API
     """
     key = read_json(key_path)
 
@@ -135,7 +135,8 @@ def get_reviews(key_path, shop_id, limit=100, offset=0):
         limit: Int of range 0-100 representing how many orders to get
         offset: First how many orders to skip chronologically
 
-    Returns a dict of reviews with all data provided by API
+    Returns:
+        Dict of reviews with all data provided by API
     """
     key = read_json(key_path)
 
@@ -200,3 +201,38 @@ def get_all_reviews(key_path, data_path, shop_id):
         reviews.extend(new_reviews["results"])
 
     save_to_json(data_path, reviews)
+
+
+def extract_data(data, parameter_1, parameter_2=None):
+    """
+    Extracts the data stored in the parameter from each order.
+
+    This function assumes parameter_1 and parameter_2 if specified exist in all
+    dicts in the list.
+
+    Args:
+        data: List of dicts that have keys parameter_1 and parameter_2 if
+        specified
+        parameter_1: Key to pull data from. It should be same datatype as key
+        in dict
+        parameter_1: Key to pull data from. It should be same datatype as key
+        in dict
+
+    Returns:
+        If both parameter_1 and parameter_2 are given, returns a 2d list with
+        the first column being parameter_1's values and the second
+        parameter_2's with each row being the data from the same order.
+    """
+    extracted_data = []
+
+    if parameter_2 is not None:
+        for i, _ in enumerate(data):
+            data_pair = []
+            data_pair.append(data[i][parameter_1])
+            data_pair.append(data[i][parameter_2])
+            extracted_data.append(data_pair)
+    else:
+        for i, _ in enumerate(data):
+            extracted_data.append(data[i][parameter_1])
+
+    return extracted_data
