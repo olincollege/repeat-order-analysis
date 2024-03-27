@@ -123,42 +123,6 @@ def get_orders(key_path, shop_id, limit=100, offset=0):
     return orders.json()
 
 
-def get_reviews(key_path, shop_id, limit=100, offset=0):
-    """
-    Gets up to 100 reviews from shop using Etsy API
-
-    If the key at key_path has expired, it gets a new key.
-
-    Args:
-        key_path: String with path to json containing key
-        shop_id: String with shop id to get orders from
-        limit: Int of range 0-100 representing how many orders to get
-        offset: First how many orders to skip chronologically
-
-    Returns:
-        Dict of reviews with all data provided by API
-    """
-    key = read_json(key_path)
-
-    headers = {
-        "Authorization": f"Bearer {key['access_token']}",
-        "x-api-key": key["keystring"],
-    }
-
-    reviews_url = (
-        f"https://openapi.etsy.com/v3/application/shops/{shop_id}"
-        + f"/reviews?limit={limit}&offset={offset}"
-    )
-    reviews = requests.get(reviews_url, headers=headers, timeout=100)
-    if reviews.status_code != 200:
-        refresh_key(key_path)
-        key = read_json(key_path)
-        headers["Authorization"] = f"Bearer {key['access_token']}"
-        reviews = requests.get(reviews_url, headers=headers, timeout=100)
-
-    return reviews.json()
-
-
 def get_all_orders(key_path, data_path, shop_id):
     """
     Gets all order receipts from an Etsy shop and saves them to a JSON
@@ -178,29 +142,44 @@ def get_all_orders(key_path, data_path, shop_id):
         new_orders = get_orders(key_path, shop_id, offset=index)
         orders.extend(new_orders["results"])
 
-    save_to_json(data_path, orders)
+    cleaned_orders = clean_anonymize(orders)
+
+    save_to_json(data_path, cleaned_orders)
 
 
-def get_all_reviews(key_path, data_path, shop_id):
+def clean_anonymize(order_data):
     """
-    Gets all order reviews from an Etsy shop and saves them to a JSON
+    Filters data so only relavant data is left show and anonymizes IDs
+
+    It only leaves the state, subtotal, create_timestamp, and numbers
+    in place of buyer_user_id so that it isn't a real id.
 
     Args:
-        key_path: String with path to json containing api key
-        data_path: String with path to where to save order data
-        shop_id: Int representing Etsy shop id
+        order_data: List of dicts of Etsy order data from reciepts endpoint
+
+    Returns:
+        List of dicts with only relavant data and anonymized ids
     """
 
-    first_review = get_reviews(key_path, shop_id, limit=1)
-    num_reviews = int(first_review["count"])
+    cleaned_data = []
 
-    reviews = []
+    new_id = 1
+    id_dict = {}
 
-    for index in range(0, num_reviews + 1, 100):
-        new_reviews = get_reviews(key_path, shop_id, offset=index)
-        reviews.extend(new_reviews["results"])
+    for order in order_data:
+        order_dict = {}
+        if order["buyer_user_id"] not in id_dict:
+            id_dict[order["buyer_user_id"]] = new_id
+            order_dict["buyer_user_id"] = new_id
+            new_id += 1
+        else:
+            order_dict["buyer_user_id"] = id_dict[order["buyer_user_id"]]
+        order_dict["state"] = order["state"]
+        order_dict["subtotal"] = order["subtotal"]
+        order_dict["create_timestamp"] = order["create_timestamp"]
+        cleaned_data.append(order_dict)
 
-    save_to_json(data_path, reviews)
+    return cleaned_data
 
 
 def extract_data(data, parameter_1, parameter_2=None):
