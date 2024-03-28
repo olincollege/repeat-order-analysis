@@ -1,5 +1,5 @@
 """
-Library to hand accessing Etsy API to pull order data and store keys
+Library to handle accessing Etsy API to pull order data and store keys
 """
 
 import json
