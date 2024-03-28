@@ -22,10 +22,15 @@ pip install matplotlib pandas plotly pytest requests
 
 To successfully run the code on your machine, you will need to clone the repo,
 then install the necessary dependencies mentioned above. The computational
-essay should run without complication because relative file paths were used.
-However, if you run into difficulty reading the data, change the data file path
-for 'orders.json' to the full path on your computer. This can be done by
-changing the variable 'ORDER_PATH' in the obtaining data section of the essay.
+essay should run without complication if you use the preprovided data from 
+Andrew's Etsy Shop because relative file paths were used. However, if you run 
+into difficulty reading the data, change the data file path for 'orders.json' 
+to the full path on your computer. This can be done by changing the variable 
+'ORDER_PATH' in the obtaining data section of the essay.
+
+If you would like to run the essay with your own shop data to visualize your
+reapeat customer characteristics, follow the instructions in the Obtaining
+Similar Data section below to pull your data.
 
 It is important to note that some unit tests in the 'test_api_lib.py' file will
 fail because they access the API which requires private keys. To obtain those
