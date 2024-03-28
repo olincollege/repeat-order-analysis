@@ -1,33 +1,29 @@
-# Python Project Template Repository
+The README provides a short summary of the project.
+Where applicable, the README provides instructions for obtaining the necessary packages or libraries needed to run the code.
+Where applicable, the README mentions any changes necessary to the code required to successfully run it.
+The README provides instructions for obtaining similar or identical data to that used in the project.
+The README provides instructions for how to generate plots similar or identical to those shown in the project computational essay.
 
-This is a template repository for a Python project. Feel free to use and edit
-this repository (including this file) for your needs. Below, find some
-instructions and tips for using this template repository.
+## Overview
 
-## How to Use
+The goal of this project was to understand the quantity and characteristics of
+repeat customers of Andrew's Etsy shop, ADesignsDenver. We did this by
+connecting to Etsy API to pull all of the order reciepts into a JSON. Then we
+processed the data to find key metrics such as repeat order rate, the sizes
+of those orders, orders broken down by state, and time between repeat orders.
+Finally we visualized the data using matplotlib.
 
-Click on the "Use this template" button in the top right corner to create a new
-repository based on this template. If this is for a class project, we ask that
-you keep it in the `olincollege` GitHub organization, and that you refrain from
-keeping the repository private. This will ensure that relevant people can access
-your repository for assessment, etc.
+## Dependencies
 
-## Requirements
 
-The `requirements.txt` file is blank and should be filled out with any project
-dependencies. There is a Python package called `pipreqs` that autogenerates the
-contents of the `requirements.txt` file based on the `import` statements in your
-`.py` files. To get this, run
+## How to run
 
-```
-pip install pipreqs
-```
+To successfully run the code on your machine, you will need to clone the repo,
+then install the necessary dependencies mentioned above. 
 
-Then, in the root of your project repository, run:
+## Obtaining Similar Data
 
-```
-pipreqs --mode compat
-```
 
-If you already have a `requirements.txt`, the above command will ask you to
-rerun the command with the `--force` flag to overwrite it.
+
+## Generating Similar Plots
+
