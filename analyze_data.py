@@ -6,13 +6,11 @@ from collections import Counter
 from datetime import datetime
 import statistics
 import pandas as pd
-from api_lib import get_all_orders, extract_data
+from api_lib import extract_data
 
 KEY_PATH = "keys.json"
 ORDERS_PATH = "orders.json"
 SHOP_ID = 23574688
-
-# get_all_orders(KEY_PATH, ORDERS_PATH, SHOP_ID)
 
 
 def calculate_orders_per_customer(orders):
@@ -145,8 +143,8 @@ def find_order_dates(orders_by_customer):
     multiple_by_month = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
     for ids, dates in mult_cust_times.items():
-        for dt in dates:
-            month = dt.month
+        for date_time in dates:
+            month = date_time.month
             multiple_by_month[month - 1] += 1
 
     for ids, dates in single_cust_times.items():
@@ -223,6 +221,7 @@ def calculate_reorder_rate_by_state(orders):
     state_reorder_df = state_reorder_df.rename(
         columns={"index": "state", 0: "reorder_rate"}
     )
+
     state_reorder_df["reorder_rate"] = state_reorder_df["reorder_rate"] * 100
 
     return state_reorder_df

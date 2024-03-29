@@ -39,7 +39,7 @@ orders = [
         "create_timestamp": 1711403198,
     },
     {
-        "buyer_user_id": 4,
+        "buyer_user_id": 1,
         "state": "VA",
         "subtotal": {"amount": 1200, "divisor": 100, "currency_code": "USD"},
         "create_timestamp": 1711400574,
@@ -102,8 +102,23 @@ def test_count_orders_by_state():
     assert "MA" in state_list["state"].values
 
 
-"""
 def test_calculate_reorder_rate_by_state():
-    state_reorder_df = calculate_reorder_rate_by_state(orders)
-    assert not state_reorder_df.empty
-"""
+    """
+    Test that it correctly calculates the reorder rate by state
+    """
+    test_orders = []
+    for i in range(100):
+        order_example_one = {"buyer_user_id": i, "state": "CO"}
+        order_example_two = {"buyer_user_id": i, "state": "VA"}
+        test_orders.append(order_example_one)
+        test_orders.append(order_example_two)
+
+    for i in range(5):
+        test_orders.append({"buyer_user_id": i, "state": "CO"})
+
+    for i in range(20):
+        test_orders.append({"buyer_user_id": i, "state": "VA"})
+
+    reorder_df = calculate_reorder_rate_by_state(test_orders)
+    expected_output = [["CO", 5], ["VA", 20]]
+    assert reorder_df.values.tolist() == expected_output

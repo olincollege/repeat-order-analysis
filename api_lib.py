@@ -205,13 +205,13 @@ def extract_data(data, parameter_1, parameter_2=None):
     extracted_data = []
 
     if parameter_2 is not None:
-        for i, _ in enumerate(data):
+        for _, order in enumerate(data):
             data_pair = []
-            data_pair.append(data[i][parameter_1])
-            data_pair.append(data[i][parameter_2])
+            data_pair.append(order[parameter_1])
+            data_pair.append(order[parameter_2])
             extracted_data.append(data_pair)
     else:
-        for i, _ in enumerate(data):
-            extracted_data.append(data[i][parameter_1])
+        for _, order in enumerate(data):
+            extracted_data.append(order[parameter_1])
 
     return extracted_data
