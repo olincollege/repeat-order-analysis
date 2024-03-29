@@ -5,7 +5,7 @@ repeat customers of Andrew's Etsy shop, ADesignsDenver. We did this by
 connecting to Etsy API to pull all of the order reciepts into a JSON. Then we
 processed the data to find key metrics such as repeat order rate, the sizes
 of those orders, orders broken down by state, and time between repeat orders.
-Finally we visualized the data using matplotlib.
+Finally we visualized the data using matplotlib and plotly.
 
 ## Dependencies
 
@@ -22,7 +22,7 @@ pip install matplotlib pandas plotly pytest requests
 
 To successfully run the code on your machine, you will need to clone the repo,
 then install the necessary dependencies mentioned above. The computational
-essay should run without complication if you use the preprovided data from 
+essay ('Essay.ipynb') should run without complication if you use the preprovided data from 
 Andrew's Etsy Shop because relative file paths were used. However, if you run 
 into difficulty reading the data, change the data file path for 'orders.json' 
 to the full path on your computer. This can be done by changing the variable 
